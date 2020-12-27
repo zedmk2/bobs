@@ -1,0 +1,343 @@
+@media print{
+   }
+
+.pageFooter:after {
+    counter-increment: page;
+    content:"Page " counter(page);
+    left: 0;
+    top: 100%;
+    white-space: nowrap;
+    z-index: 20px;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 0px 0px 4px #222;
+    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  }
+
+/* Shift Form */
+
+.shiftFormJobLocation{
+  width:40%;
+}
+
+.jobOrderForm{
+  width:20px;
+}
+
+/* Shift Form End */
+
+#addShift td{
+ font-size:0.75rem;
+}
+
+#addShift tr td{
+  width: 15%;
+}
+
+#addShift  tr td input{
+  width: 75%;
+
+}
+
+#addShift  tr td select{
+  width: 75%;
+
+}
+
+.payrollDate{
+  width:35%;
+}
+
+.payrollDateButton{
+  width:20%;
+  padding:0.1em;
+}
+
+.shiftListDate  {
+  color: grey;
+  font-size: 1.2rem;
+  margin:0.1em;
+}
+
+.list-shift-item-heading {
+  color:  #06c;
+}
+
+.list-shift-item-heading {
+  font-size: 1rem;
+
+}
+
+.date-summary-heading{
+	font-size: 1.1rem;
+  margin:0;
+}
+
+.date-summary-shiftDate{
+	font-size:1.2rem;
+	text-decoration:underline;
+}
+
+.date-summary-shift-li{
+	list-style:none;
+}
+
+.date-summary-litem{
+  margin:0;
+  padding:0;
+
+}
+
+.scheduleRows tr td{
+  width:100px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.scheduleRows tr{
+  height:35px;
+}
+
+.scheduleTable th {
+  border: 1px solid black;
+}
+
+/* Bootstrap URL printing removal */
+
+@media print {
+  a[href]:after {
+    content: "";
+  }
+}
+
+  .jobListFirstRow > h4{
+    margin-bottom:0px;
+    page-break-after: avoid;
+  }
+
+  .jLFirstRow{
+    page-break-after: avoid;
+  }
+
+  .jobListMiddleRow ol {
+    margin-bottom:0px;
+  }
+
+  .jobListMiddleRow {
+    page-break-after: avoid;
+    page-break-before: avoid;
+    page-break-inside: auto;
+  }
+
+  .jobCostSum{
+    page-break-after: avoid;
+  }
+
+.inspectionTable {
+  border-collapse:collapse;
+}
+
+.createdBy {
+  background-color:red;
+  width: 50%;
+  float:left;
+}
+
+.createdDate {
+  background-color:blue;
+  width: 50%;
+  float:right;
+}
+
+.red {
+  background-color:red;
+}
+
+.yellow {
+  background-color:yellow;
+}
+
+.green {
+  background-color:green;
+}
+
+.blue {
+  background-color:#4efcc8;
+}
+
+.grey {
+  background-color:#d6d8d8;
+}
+
+.row{
+  margin:10px;
+}
+
+.user{
+  font-size: 0.7rem;
+}
+
+.propInspecList2{
+  font-size:0.7rem;
+}
+
+.inspectionListItem{
+  font-size:0.9rem;
+}
+
+.reportHeader{
+  list-style-type:none;
+  font-size: 1rem;
+  padding: 0px;
+  line-height: 1.1rem;
+}
+
+.reportHeader li{
+  padding: 0px;
+}
+
+.reportHeader-l{
+  text-align:left;
+}
+
+.reportHeader-r{
+  text-align:right;
+}
+
+.jobCostingTable{
+  font-size: 0.8rem;
+}
+
+.jobCostingTable-totalLabel{
+  text-align:right;
+}
+
+.jobCostingTable-totalRow{
+  font-weight: bold;
+}
+
+.jobCostingTable-info{
+  font-size: 0.6rem;
+
+}
+
+.jobCostingTable-custRow td{
+  font-weight:bold;
+  font-size: 1.2rem;
+  background-color:#7ba4e5 !important;
+}
+
+.jobCostingTable-propRow td{
+  font-weight:bold;
+  font-size: 1rem;
+  text-decoration: underline;
+  background-color:#dadee5 !important;
+}
+
+@media print{
+  .jobCostingTable-custRow td{
+    background-color:#7ba4e5 !important;
+  }
+
+  .jobCostingTable-propRow td{
+    background-color:#dadee5 !important;
+  }
+}
+
+.jobCostingTable-rightData{
+  text-align:right;
+}
+
+body{
+  -webkit-print-color-adjust:exact;
+}
+
+
+/* Below CSS for route sheet*/
+
+.wrapper-sheet{
+font-size: 0.6rem;
+  }
+
+.tbl-routes{
+	width: 100%;
+}
+
+.tbl-routes  td, .tbl-routes  th{
+	border: 1px solid black;
+	font-size:0.6rem;
+}
+
+
+.tbl-routes-first-row th{
+	background-color: #ffff99;
+	text-align: center;
+	font-size: 0.5rem;
+}
+
+.tbl-routes-second-row  th {
+	font-size: 0.5rem;
+	text-align: center;
+}
+
+.tbl-shift-header td{
+    padding: 5px;
+    font-weight:bold;
+}
+
+.tbl-shift-header-rows td:nth-child(even){
+
+}
+
+.input-info{
+    text-decoration:underline;
+
+    display=inline;
+    overflow=auto;
+}
+
+.route-table td{
+	
+}
+
+.route-table-jobs{
+	font-size:0.7rem;
+}
+
+.route-table-pricing{
+	width: 100%;
+}
+
+.route-table-pricing tr td{
+	font-size:0.7rem;
+	border: 1px solid black;
+}
+
+.route-table-pricing-total td{
+	font-weight: bold;
+}
+
+.route-sheet-address{
+	font-size: 0.6rem;
+}
+
+
+
+
+/* ALIGNMENT IDS */
+
+#right{
+    text-align:right;
+}
+
+#center{
+	text-align:center;
+}
+
+#bold{
+	font-weight:bold;
+}
+
+#yellow {
+    background-color:yellow;
+}

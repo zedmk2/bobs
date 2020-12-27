@@ -1,0 +1,34 @@
+#! python3
+#iif_converter.py - takes jason property/job data and creates QB IIF text
+#delimted file for quickbooks invoice creation
+
+from work.models import *
+import csv
+import json
+import ast
+
+upload = open('original_sweep_only.csv',encoding = "ISO-8859-1")
+uploadReader = csv.reader(upload,delimiter='\t')
+ud = list(uploadReader)
+
+dupload = open('output_for_qb.csv',encoding = "ISO-8859-1")
+duploadReader = csv.reader(dupload,delimiter='\t')
+dd = list(duploadReader)
+
+i=0
+j=0
+
+dd[3][7] = ud[3][7]
+
+for orig in ud:
+    for new in dd:
+        if new[20] == orig[20] and orig[0] != 'ENDTRNS' and orig[20] != '':
+            new[7]=orig[7]
+            i=0
+            for a in orig:
+                i +=1
+            if not new==orig:
+                print(orig)
+                print(new)
+                print(orig==new)
+                print('nope')

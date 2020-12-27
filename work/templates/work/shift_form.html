@@ -1,0 +1,161 @@
+{% extends "work/work_base.html" %}
+{{formset.media.css}}
+
+{% load staticfiles %}
+
+{% load widget_tweaks %}
+
+{% block prework %}
+<!-- Include formset plugin - including jQuery dependency -->
+{% endblock %}
+
+{%block work_content%}
+<br>
+<div class="container">
+
+  <div id="formset-template" style="display: none;">
+    <table class='table table-sm'>
+      <tbody>
+        <tr>
+           <td>{{ formset.empty_form }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <form method="POST" action="" id="batchJobForm">
+  	{% csrf_token %}
+
+    {% if form.errors %}
+    Please correct the error{{ form.errors|pluralize }} below.
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <table id='addShift' class='tbl-shift-header'>
+
+        <tr>
+
+          <td>Date: {{shift_form.date}} </td>
+          <td>Route: {{shift_form.day_num}} </td>
+          <td>Truck: {{shift_form.truck|add_class:"shiftSelect2"}}</td>
+          <td>{{object.date|date:"l"}} {{object}}</td>
+        </tr>
+        <tr>
+
+          <td>Driver: {{shift_form.driver|add_class:"shiftSelect2"}}</td>
+          <td>Time In: {{shift_form.dr_start_time|add_class:"driverStart"}}</td>
+          <td>Time Out: {{shift_form.dr_end_time|add_class:"driverEnd"}}</td>
+          <td><input type="submit" value="Update Shift" class="btn btn-primary btn-large"></td>
+        </tr>
+        <tr>
+
+          <td>Helper: {{shift_form.helper|add_class:"shiftSelect2"}}</td>
+          <td>Time In: {{shift_form.he_start_time|add_class:"helperStart"}}</td>
+          <td>Time Out: {{shift_form.he_end_time|add_class:"helperEnd"}}</td>
+          <td>Shift type: {{shift_form.shift_type|add_class:"shiftSelect2"}}</td>
+        </tr>
+        <tr>
+
+          <td>Helper 2: {{shift_form.helper_2|add_class:"shiftSelect2"}}</td>
+          <td>Time In: {{shift_form.he_2_start_time|add_class:"helper2Start"}}</td>
+          <td>Time Out: {{shift_form.he_2_end_time|add_class:"helper2Start"}}</td>
+          <td></td>
+        </tr>
+
+    </table>
+
+
+
+
+
+      {{ formset.management_form }}
+
+            <div id="jobsIn">
+
+  <table  class='tbl-routes'>
+          {% if formset.errors %}
+              {% for field in formset %}
+                  {% for error in field.errors %}
+                  {%if error == 'order' %}
+                      <div class="alert alert-danger">
+                          <strong>Please check job order number for all jobs</strong>
+                      </div>
+                      {%endif%}
+                  {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+              {% endfor %}
+          {% endif %}
+
+    <tbody>
+      <tr class='tbl-routes-first-row'>
+        <th width=3%>#</th>
+        <th width=30%>Property</th>
+        <th width=10% colspan=2>Time</th>
+        <th width=10% colspan=2>Sweep</th>
+        <th width=10% colspan=3>Blow</th>
+        <th width=10% colspan=3>Pick</th>
+        <th width=10% colspan=2>Trash</th>
+        <th width=7%>Bulk</th>
+        <th width=10%>Dumpster</th>
+      </tr>
+      <tr class='tbl-routes-second-row'>
+          <th></th>
+          <td></td>
+          <th>In</th>
+          <th>Out</th>
+          <th>Front</th>
+          <th>Back</th>
+          <th>Front</th>
+          <th>Back</th>
+          <th>S/W</th>
+          <th>Front</th>
+          <th>Back</th>
+          <th>S/W</th>
+          <th>Empty</th>
+          <th># bags</th>
+          <th>Yes</th>
+          <th>100%</th>
+      </tr>
+      {%for job_f in formset %}{{job_f.id}}
+    <tr>
+      <td class='jobOrderForm'>{{job_f.order}}</td>
+      <td> {{job_f.job_location|add_class:"locationSelector shiftFormJobLocation"}}</td>
+      <td>{{job_f.start_time}}</td>
+      <td>{{job_f.end_time}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+      {%endfor %}
+    </tbody>
+    </table>
+    </div>
+  </form>
+</div>
+
+{{ form.media.js }}
+{%endblock%}

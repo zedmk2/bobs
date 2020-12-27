@@ -1,0 +1,117 @@
+{% extends "work/work_base.html" %}
+
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block work_content %}
+<div class="container">
+  <div class="row">
+    <h2>Property List</h2>
+  </div>
+<h3>Weekly jobs</h3>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Property</th>
+        <th scope="col">Client</th>
+        <th scope="col">Times Per Week</th>
+        <th scope="col">Days of Week</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for property in weekly %}
+      {%if property.check_priority == 1%}
+      {%if property.times_per_week  %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{property.display_name}}</td>
+        <td>{{property.client_name}}</td>
+        <td>{{property.times_per_week}}</td>
+        <td>{%if property.times_per_week == 7%}All{%else%}{{property.days_of_week}}{%endif%}</td>
+      </tr>
+      {%endif%}
+      {%endif%}
+      {%endfor%}
+    </tbody>
+  </table>
+
+<h3>Monthly (commercial) jobs</h3>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Property</th>
+        <th scope="col">Client</th>
+        <th scope="col">Times Per Month</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for property in object_list %}
+      {%if property.check_priority == 1%}
+      {%if property.times_per_month  %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{property.display_name}}</td>
+        <td>{{property.client_name}}</td>
+        <td>{{property.times_per_month}}</td>
+      </tr>
+      {%endif%}
+      {%endif%}
+      {%endfor%}
+    </tbody>
+  </table>
+
+<h3>Seasonal jobs</h3>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Property</th>
+          <th scope="col">Client</th>
+          <th scope="col">Times Per Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for property in object_list %}
+        {%if property.times_per_year  %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{property.display_name}}</td>
+          <td>{{property.client_name}}</td>
+          <td>{{property.times_per_year}}</td>
+        </tr>
+        {%endif%}
+        {%endfor%}
+      </tbody>
+    </table>
+
+<h3>All else</h3>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Property</th>
+          <th scope="col">Client</th>
+          <th scope="col">Times Per Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for property in object_list %}
+        {%if not property.times_per_year and not property.times_per_month and not property.times_per_week  %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{property.display_name}}</td>
+          <td>{{property.client_name}}</td>
+          <td>{{property.times_per_year}}</td>
+        </tr>
+        {%endif%}
+        {%endfor%}
+      </tbody>
+    </table>
+
+</div>
+{% endblock %}

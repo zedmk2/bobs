@@ -1,0 +1,40 @@
+{% extends "work/work_base.html" %}
+
+
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static '/css/master.css' %}">
+<img src="{% static 'unnamed.png'%}" alt="">
+
+{% block prework %}
+
+
+  <div class="container">
+    <div class="card card-with-shadow">
+      <div class="content">
+        <h1 class='title'>Payroll Report</h1>
+        <h4>{{begin}} to {{end}}</h4>
+        <table class='table table-bordered'>
+          <thead class='thead-light'>
+            <th>Employee</th>
+            {% for date in dates%}
+            <th>{{date|date:"M j"}}<br>{{date|date:"D"}}</th>
+            {%endfor%}
+            <th>Total</th>
+          </thead>
+
+        {%for emp in emp_mix%}<tr>
+          <td>{{emp.employee}}</td>
+          {%for i in emp.shifts%}
+          <td>{{i|floatformat:"-2"}}</td>
+          {%endfor %}
+          <td>{{emp.total}}</td>
+        {%endfor%}
+
+        <tr class='table-secondary'><th>Total</th>{% for date in dates%}<td></td>{%endfor%}<th>{{total_hours}}</th>
+      </table>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

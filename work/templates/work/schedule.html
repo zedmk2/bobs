@@ -1,0 +1,53 @@
+
+{% extends "work/work_base.html" %}
+
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block work_content %}
+{{form}}
+
+<div class="container-fluid">
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    {{ form.management_form }}
+    <div class="row">
+      {%for d in date_list%}
+      <div class="col">
+        {{d}}<br>{{d|date:"l"}}{{d|date:"d"}}
+
+          <div class="row">
+            {%for f in form%} {{f.id}} {{f.date}}
+            {% if f.date.value|date:"d" == d|date:"d" %}
+            <div class="col-6">
+              {{f.driver}}
+            </div>
+            <div class="col-6">
+              {{f.helper}}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+
+      </div>
+      {% endfor %}
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<br>
+<br>
+DELETE BELOW
+<br>
+<br>
+<br>
+<br>
+
+Form date: {{form_date}}
+<br> <br>
+
+These are the drivers and helpers: {{employees}} <br>
+
+
+{% endblock %}

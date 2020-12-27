@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+
+{% block content  %}
+<style>
+.yui3-button {
+    margin:10px 0px 10px 0px;
+    color: #fff;
+    background-color: #3476b7;
+}
+</style>
+
+
+  {% if user.is_authenticated %}
+  <div class='container'>
+    <h2>Welcome to MobS</h2>
+    <h5><em>Mobile Sweep job tracking system</em></h5>
+<div class="jumbotron">
+  <div id="demo" class="yui3-skin-sam yui3-g"> <!-- You need this skin class -->
+
+    <div id="leftcolumn" class="yui3-u">
+       <!-- Container for the calendar -->
+       <div id="mycalendar"></div>
+    </div>
+    <div id="rightcolumn" class="yui3-u">
+     <div id="links" style="padding-left:20px;">
+        <!-- The buttons are created simply by assigning the correct CSS class
+        <button id="togglePrevMonth" class="yui3-button">Toggle Previous Month's Dates</button><br>
+        <button id="toggleNextMonth" class="yui3-button">Toggle Next Month's Dates</button><br> -->
+        Shifts for: <a href="{% url 'shifts:all' %}">last 30 days</a> | <a href="{% url 'shifts:next' %}">next 30 days</a> | <a href="{% url 'shifts:calendar'%}">Monthly calendar</a>
+     </div>
+    </div>
+  </div>
+  <div class='row'>
+      <div class='col-6'>
+         <a href="{% url 'shifts:create' %}">Log new shift and jobs</a> | <a href="{% url 'shifts:batchshift' %}">Batch new shifts (no jobs)</a>
+      </div>
+      <div class='col-6'>
+        Job costing report
+          <form class="" action="" method="post">
+              {% csrf_token %}
+              {{form.non_field_errors}}
+              {{form.begin}}
+              {{form.end}}
+              <input class='btn btn-primary payrollDateButton' type="submit" name="" value="Go">
+          </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-6'> <a href="{% url 'shifts:payroll_list' %}">Weekly payroll reports</a></div>
+      
+    </div>
+  </div>
+
+</div>
+</div>
+
+    {% else %}
+
+  {% endif %}
+
+
+{% endblock %}

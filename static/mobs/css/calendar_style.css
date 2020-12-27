@@ -1,0 +1,40 @@
+::selection {
+  background: rgba(0,0,0,.05);
+}
+body {
+  padding: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+ul, h1, h2, h3, h4 {
+  margin: 0; padding: 0;
+  list-style: none;
+}
+a, li,
+header nav span,
+article span {
+  text-decoration: none;
+  transition: all .25s ease-in-out;
+}
+h1 {
+  font: 300 28px 'Open Sans';
+  color: #4c5373;
+}
+
+/****/
+
+td{
+  vertical-align: top;
+}
+
+.calendar-date{
+  vertical-align: top;
+}
+
+.calendar-job-list{
+
+}
+
+.calendar-job-list-item{
+  font-size: 0.6rem;
+  padding-left: 10px;
+}

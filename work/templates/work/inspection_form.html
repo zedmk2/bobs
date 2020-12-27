@@ -1,0 +1,43 @@
+{% extends "work/work_base.html" %}
+
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+{% block work_content %}
+<div class='container'>
+  <div class='row'>
+    <div class='col'>
+
+    <form class="" action="" method="post">
+    {% csrf_token %}
+    <h3>Property inspection ticket</h3>
+    </div>
+  </div>
+  <div class='row'>
+      {%if object.id%}
+          <div class='col'><label for='created_by'>Created by:</label>
+          {{form.created_by|add_class:"form-control"}}</div>
+           <div class='col align-self-center'>{{object.date|date:"M d, Y"}}</div>
+      {%else%}
+      <div class='col'><label for='created_by'>Created by:</label>
+        {{form.created_by|add_class:"form-control"}}</div>
+      <div class='col align-self-center'>{{today|date:"M d, Y"}}</div>
+      {%endif%}
+
+      <div class='col'><label for='updated_by'>Updated:</label> {{form.updated_by|add_class:"form-control"}}</div>
+        <div class='col align-self-center'>{%if object.updated%}{{object.updated|date:"M d, Y"}}
+        {%else%}{{today|date:"M d, Y"}}{%endif%}</div>
+      </div>
+
+    <div class='row'>
+      <div class='col-6'>{{form.prop|add_class:"shiftSelect2"}}</div>
+      <div class='col-3'>{{form.date|add_class:"shiftDate form-control"}}</div>
+      <div class='col-1'><label for='id_rating'>Rating:</label></div><div class='col-2'>{{form.rating|add_class:"form-control"}}</div>
+    </div>
+    <div class='row inspectionBottom'><div class='col'>Comments:<br>{{form.description|add_class:"inspectionBottom form-control"}}</div></div>
+    <div class='row inspectionBottom'><div class='col'>
+      <button type="submit" name="submit" class='btn btn-primary btn-large'>{%if object.id %}Update{%else%}Submit{%endif%}</button></div>
+  </div></div>
+</form>
+</div>
+{% endblock %}
