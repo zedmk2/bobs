@@ -5,14 +5,19 @@ from django.contrib.admin.models import LogEntry
 
 # Register your models here.
 
+
 class JobAdmin(admin.ModelAdmin):
     search_fields = ['job_location']
     list_display = ['job_shift','job_location','start_time','end_time','date']
 
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ['name','em_uid','driver','helper','porter']
+    list_editable = ['em_uid',]
+
 class PropertyAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_display = ['id','name','display_name','color','instructions','check_priority','sw_price','sw_mo_price','times_per_week','days_of_week','times_per_month','times_per_year']
-    list_editable = ['color',]
+    list_editable = ['color','check_priority']
     list_filter = ['job_costing_report_include',]
 
 class RouteJobAdmin(admin.ModelAdmin):
@@ -66,7 +71,7 @@ admin.site.register(models.Job, JobAdmin)
 admin.site.register(models.Client, ClientAdmin)
 admin.site.register(models.Property, PropertyAdmin)
 admin.site.register(models.Inspection)
-admin.site.register(models.Employee)
+admin.site.register(models.Employee, EmployeeAdmin)
 admin.site.register(models.Shift,Shift_Inline_Admin)
 admin.site.register(models.Route, RouteAdmin)
 admin.site.register(models.RouteJob, RouteJobAdmin)
