@@ -6,16 +6,34 @@
 {% block work_content %}
 <div class="container">
   <div class="row">
-    <h2>Property List - Quarterly / Biannual Sweeps</h2>
+    <h3>Property List - Quarterly / Triannual / Biannual Sweeps</h3>
+  </div>
+  <div class="row">
+    <table>
+      <tr>
+        <td style="padding:0px 5px 0px 5px" class="table-success">Recently serviced</td>
+        <td style="padding:0px 5px 0px 5px" class="table-warning">Schedule soon</td>
+        <td style="padding:0px 5px 0px 5px" class="table-danger">Overdue</td>
+      </tr>
+    </table>
   </div>
 
 <ul class='list-group'>
 {%for property in object_list %}
-<li class='list-group-item list-group-item-info'> <a href="{% url 'shifts:update_property' pk=property.pk%}"> {{property.name}} | {{property.display_name}} |<br> <b>Times Per Year: {{property.times_per_year}} ({{property.memo}}) </b></a></li>
-  <li class='list-group-item'><ul class='list-group'>{%for job in property.recent_jobs %}
-  <li class='list-group-item'> <a href='{% url 'shifts:update' pk=job.job_shift.pk%}'> <span class="{{property.color}}" aria-hidden="true"></span> {{job.job_shift}} </a> </li>
-
-  {%endfor%}</ul></li>
+<li class="{{property.sweep_status}}"> <a href="{% url 'shifts:update_property' pk=property.pk%}">
+        <b>{{property.name}} | {{property.client_name}} | {{property.adlspl}} hrs. |</b>
+        <br>Times Per Year: {{property.times_per_year}} ({{property.memo}})
+        <br>Last scheduled: {{property.last_done}} | {{property.days_since}} days since last scheduled </a>
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#{{property}}" aria-expanded="false" aria-controls="collapseExample">
+            Expand  </button></li>
+      <div class='collapse' id='{{property}}'>
+        <li  class='list-group-item'>
+            <ul class='list-group'>{%for job in property.recent_jobs %}
+              <li class='list-group-item'> <a href='{% url 'shifts:update' pk=job.job_shift.pk%}'>
+                <span class="{{property.color}}" aria-hidden="true"></span> {{job.job_shift}} </a> </li>
+                {%endfor%}</ul>
+        </li>
+      </div>
   </li>
   {%endfor%}
 </ul>

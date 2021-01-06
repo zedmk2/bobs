@@ -1,3 +1,6 @@
+$(document).ready(function() {
+  document.getElementsByTagName("html")[0].style.visibility = "visible";
+});
 
 $('.shiftSelect2').select2({
   width: '75%'
