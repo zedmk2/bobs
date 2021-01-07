@@ -24,9 +24,9 @@
         <b>{{property.name}} | {{property.client_name}} | {{property.adlspl}} hrs. |</b>
         <br>Times Per Year: {{property.times_per_year}} ({{property.memo}})
         <br>Last scheduled: {{property.last_done}} | {{property.days_since}} days since last scheduled </a>
-        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#{{property}}" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#c-{{property|slugify}}" aria-expanded="false" aria-controls="collapseExample">
             Expand  </button></li>
-      <div class='collapse' id='{{property}}'>
+      <div class='collapse' id='c-{{property|slugify}}'>
         <li  class='list-group-item'>
             <ul class='list-group'>{%for job in property.recent_jobs %}
               <li class='list-group-item'> <a href='{% url 'shifts:update' pk=job.job_shift.pk%}'>
