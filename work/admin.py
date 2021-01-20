@@ -16,8 +16,8 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 class PropertyAdmin(admin.ModelAdmin):
     search_fields = ['name']
-    list_display = ['id','name','display_name','color','instructions','check_priority','sw_price','sw_mo_price','times_per_week','days_of_week','times_per_month','times_per_year']
-    list_editable = ['color','check_priority']
+    list_display = ['id','name','display_name','color','instructions','check_priority','sw_price','sw_mo_price','times_per_week','days_of_week','times_per_month','times_per_year','adlspl','job_costing_report_include',]
+    list_editable = ['color','check_priority','sw_price','sw_mo_price','adlspl']
     list_filter = ['job_costing_report_include',]
 
 class RouteJobAdmin(admin.ModelAdmin):
