@@ -4,43 +4,62 @@
 {% load staticfiles %}
 
 {% block prework %}
-
 {% endblock %}
 
 {% block work_content %}
-<div class="container">
+<style type="text/css" media="print">
+  @page {
+    size: A4 landscape;
+    font-size: 0.4rem;
+    }
+</style>
+<div class="container-fluid">
 
-<h3>Route pricing</h3>
+<h4>Route pricing</h4>
 
 {% regroup object_list by dow as route_list%}
-<div class="row">
-  {% for dow in route_list %}
-  <div class="row">
-    Day of week: {{dow.grouper}} <br>
-      {% for route in dow.list %}
+<div>
+<table class='route-table' width=100%>
+  {%for dow in route_list%}
+  <!-- <tr>
+    <td>  {{dow.grouper}}</td>
+  </tr> -->
+  <tr>
+  {%for route in dow.list%}
+      <td>
+            <table  class='route-table-pricing'>
+                  <tr>
+                    <td colspan='4'>{{route.dow}} - {{route.driver}} - {{route.route_num}}</td>
+                  </tr>
+                  <tr>
+                    <th>#</th>
+                    <th>Prop</th>
+                    <th>Time</th>
+                    <th>Rev</th>
+                  </tr>
+                  {%for prop in route.job_route.all%}
+                  <tr>
+                    <td width=7.5% class="{% if prop.freq == "even" %} yellow {% elif prop.freq == "odd" %}green{%endif%}" > {{prop.order}} </td>
+                    <td width=50%>{{prop.route_location.name}}</td>
+                    <td width=2.5%>{{prop.job_length}}</td>
+                    <td width=10%>{{prop.route_location.sweep_price}}</td>
+                  </tr>
+                  {%endfor%}
+                  <tr class='route-table-pricing-total'>
+                    <td>Total:</td>
+                    <td></td>
+                    <td></td>
+                    <td>${{route.route_price}}</td>
+                  </tr>
+            </table>
+        </td>
+  {%endfor%}
+    </tr>
+  {%endfor%}
+</table>
 
-    {{route.route_num}}. {{route.driver}}
-          <table class='route-table-pricing'>
-            {% for prop in route.job_route.all %}
-              <tr>
-                <td width=7.5% class="{% if prop.freq == "even" %} yellow {% elif prop.freq == "odd" %}green{%endif%}" > {{prop.order}} </td>
-                <td>{{prop.route_location.name}}</td>
-                <td width=2.5%>{{prop.job_length}}</td>
-                <td width=10%>{{prop.route_location.sweep_price}}</td>
-              </tr>
-            {% endfor %}
-            <tr class='route-table-pricing-total'>
-              <td>Total:</td>
-              <td></td>
-              <td></td>
-              <td>{{route.route_price}}</td>
-            </tr>
-          </table>
+  </div>
 
-      {% endfor %}
-      </div>
-    {% endfor %}
-</div>
 </div>
 
 {% endblock %}

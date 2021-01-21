@@ -168,6 +168,10 @@ html { visibility:hidden; }
   background-color:#4efcc8;
 }
 
+#blue {
+  background-color:#4efcc8;
+}
+
 .grey {
   background-color:#d6d8d8;
 }
@@ -299,8 +303,8 @@ font-size: 0.6rem;
     overflow=auto;
 }
 
-.route-table td{
-	
+.route-table tr td{
+	vertical-align: top;
 }
 
 .route-table-jobs{
@@ -314,6 +318,12 @@ font-size: 0.6rem;
 .route-table-pricing tr td{
 	font-size:0.7rem;
 	border: 1px solid black;
+	
+}
+
+.route-table-pricing th{
+	font-size:0.7rem;
+	
 }
 
 .route-table-pricing-total td{

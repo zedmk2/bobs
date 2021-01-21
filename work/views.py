@@ -425,7 +425,7 @@ class RoutePricing(generic.ListView):
 
     def get_queryset(self):
         # return Route.objects.filter(type='commercial').prefetch_related('driver').prefetch_related('job_route').prefetch_related('job_route__route_location')
-        qs = Route.objects.all().prefetch_related('driver').prefetch_related('job_route').prefetch_related('job_route__route_location')
+        qs = Route.objects.exclude(weekday='7').prefetch_related('driver').prefetch_related('job_route').prefetch_related('job_route__route_location')
         today = datetime.datetime.now()
         six_mos = today - datetime.timedelta(days=220)
         ts = Shift.objects.filter(date__gte='2018-12-21').filter(date__lte='2019-01-01')
@@ -441,9 +441,10 @@ class RoutePricing(generic.ListView):
                 try:
                     prop.job_length = job_lengths[prop.route_location.name]
                 except:
-                    prop.job_length = 1
+                    prop.job_length = 0
                 # print(property.route_location)
         print(job_lengths)
+        pulse=4
         return qs
 
     def get_context_data(self, **kwargs):
@@ -452,6 +453,8 @@ class RoutePricing(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['date_form'] = date_form
         context['route_form'] = route_form
+        query = Route.objects.all().prefetch_related('driver').prefetch_related('job_route').prefetch_related('job_route__route_location')
+        context['query'] = query
         return context
 
 ##############VIEWS FOR PAYROLL REPORTS
@@ -1005,16 +1008,16 @@ class AnnualSchedule(LoginRequiredMixin,generic.ListView):
                 prop.days_since = prop.days_since.days
                 prop.days_since_number = prop.days_since
                 if prop.days_since < prop.time_between_early:
-                    prop.sweep_status = 'list-group-item-success list-group-item'
+                    prop.sweep_status = 'table-success'
                 elif prop.days_since < prop.time_between:
-                    prop.sweep_status = 'list-group-item list-group-item-warning'
+                    prop.sweep_status = 'table-warning'
                 elif prop.days_since < prop.time_between_late:
-                    prop.sweep_status = 'list-group-item list-group-item-danger'
+                    prop.sweep_status = 'table-danger'
                 else:
-                    prop.sweep_status = 'list-group-item list-group-item-dark'
+                    prop.sweep_status = 'table-dark'
             except:
                 prop.last_done = "not done"
-                prop.sweep_status = 'list-group-item'
+                prop.sweep_status = 'table-light'
         return queryset
     template_name = "work/annual_list.html"
 
