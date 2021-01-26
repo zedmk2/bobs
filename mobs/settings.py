@@ -33,6 +33,7 @@ DEBUG = os.environ.get("DEBUG") == 'True'
 ALLOWED_HOSTS = ['mobilesweep.pythonanywhere.com',
     '127.0.0.1',
     'mobs.mobilesweepinc.com',
+    'bobs.mobilesweepinc.com',
 ]
 
 
@@ -56,9 +57,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
