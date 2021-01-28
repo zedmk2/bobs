@@ -270,9 +270,9 @@ class Job(models.Model):
     order = models.IntegerField(default=1)
     start_time = models.TimeField(blank=True,null=True)
     end_time = models.TimeField(blank=True,null=True)
-    sweep = models.NullBooleanField(blank=True,null=True)
-    blow = models.NullBooleanField(blank=True,null=True)
-    pick = models.NullBooleanField(blank=True,null=True)
+    sweep = models.BooleanField(blank=True,null=True)
+    blow = models.BooleanField(blank=True,null=True)
+    pick = models.BooleanField(blank=True,null=True)
 
     @property
     def date(self):

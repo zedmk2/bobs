@@ -1,7 +1,7 @@
 import os
 import time, calendar
 from collections import defaultdict
-from django.shortcuts import render, render_to_response, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -22,7 +22,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from django.db.models import Count, Sum, Avg
-from easy_pdf.views import PDFTemplateView, PDFTemplateResponseMixin
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.units import inch
@@ -34,8 +33,6 @@ from django.utils.safestring import mark_safe
 
 import datetime
 from io import BytesIO
-
-from braces.views import SelectRelatedMixin
 
 from django import forms
 from django.forms import formsets, inlineformset_factory
@@ -1079,17 +1076,19 @@ class Calendar(generic.ListView):
 
 class ServiceHistory(LoginRequiredMixin,generic.ListView):
     def get_queryset(self):
+        today = datetime.date.today()
         queryset = Property.objects.prefetch_related('location').prefetch_related('location__job_shift').prefetch_related('location__job_shift__driver').prefetch_related('client_name')
         for prop in queryset:
             prop.recent_jobs = []
             for loc in prop.location.all():
-                prop.recent_jobs.append(loc)
+                if loc.job_shift.date <= today:
+                    prop.recent_jobs.append(loc)
             prop.recent_jobs = prop.recent_jobs[-6:]
             try:
                 prop.last_done = prop.recent_jobs[-1].job_shift.date
             except:
                 prop.last_done = "not done"
-            
+
         return queryset
     template_name = "work/service_history.html"
 
