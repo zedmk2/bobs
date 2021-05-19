@@ -1227,8 +1227,8 @@ def pdf_build(shift):
     width, height = letter
     # Start writing the PDF here
     p = SimpleDocTemplate(buffer, leftMargin=0.5*inch,rightMargin=0.5*inch,bottomMargin=0.5*inch,topMargin=0.5*inch,pagesize=letter)
-    logo=os.path.join(settings.BASE_DIR,'static','mobs','action.jpg')
-    I = Image(logo,width=1.7*inch,height=1.2*inch)
+    logo=os.path.join(settings.BASE_DIR,'static','mobs','ms.jpg')
+    I = Image(logo,width=1.4*inch,height=1*inch)
     # container for the 'Flowable' objects
     elements = []
     # Header table
@@ -1316,7 +1316,7 @@ def pdf_build(shift):
     data_end_2 = [  ['Comments/Truck issues:'],
                     ]
 
-    e_2 = Table(data_end_2,colWidths=[7*inch, 2.4*inch])
+    e_2 = Table(data_end_2,colWidths=[7.4*inch])
     e_2.setStyle(TableStyle([('BACKGROUND',(0,0),(3,3),'#ffffff'),
                         #    ('BOX',(0,0),(-1,-1),1,colors.black),
                            ('FONT',(0,0),(-1,-1),'Helvetica',8),
