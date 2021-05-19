@@ -45,7 +45,7 @@ class Truck(models.Model):
 
 class Client(models.Model):
 
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200)
     billing_name = models.CharField(max_length=200, blank=True,null=True)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
@@ -56,7 +56,13 @@ class Client(models.Model):
     end_date = models.DateField(blank=True,null=True)
 
     class Meta:
+        unique_together = (("name","state"),
+                            )
         ordering = ["name"]
+
+
+    def natural_key(self):
+        return (self.name, self.billing_name, "Action")
 
     def __str__(self):
         return self.name
@@ -138,6 +144,9 @@ class Property(models.Model):
             return 0
         except:
             return 0
+
+    def natural_key(self):
+        return (self.name, self.display_name)
 
     class Meta:
         verbose_name_plural = "properties"

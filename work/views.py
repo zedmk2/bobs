@@ -26,7 +26,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.units import inch
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Frame, PageTemplate, Paragraph, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Frame, PageTemplate, Paragraph, Image, Spacer
 from reportlab.lib.styles import ParagraphStyle
 from . import utils
 from django.utils.safestring import mark_safe
@@ -1226,9 +1226,9 @@ def pdf_build(shift):
     buffer = BytesIO()
     width, height = letter
     # Start writing the PDF here
-    p = SimpleDocTemplate(buffer, leftMargin=0.5*inch,rightMargin=0.5*inch,bottomMargin=0.5*inch,topMargin=0.5*inch,pagesize=landscape(letter))
+    p = SimpleDocTemplate(buffer, leftMargin=0.5*inch,rightMargin=0.5*inch,bottomMargin=0.5*inch,topMargin=0.5*inch,pagesize=letter)
     logo=os.path.join(settings.BASE_DIR,'static','mobs','action.jpg')
-    I = Image(logo,width=2.2*inch,height=1.2*inch)
+    I = Image(logo,width=1.7*inch,height=1.2*inch)
     # container for the 'Flowable' objects
     elements = []
     # Header table
@@ -1238,13 +1238,13 @@ def pdf_build(shift):
     for job in shift.jobs_in_shift.all():
         if job.job_location.saddr5:
             terms_adder = job.job_location.saddr5
-    data_h = [[I,current_date.strftime('%A')+': '+current_date.strftime('%b %d, %Y')+' / '+tom_date.strftime('%A')+': '+tom_date.strftime('%b %d, %Y'),terms_adder,shift.driver,'','Weather'],
-                ['','Driver','','','Windy'],
-                ['','Helper','','','Rainy'],
+    data_h = [[I,current_date.strftime('%A')+': '+current_date.strftime('%b %d, %Y')+' / '+tom_date.strftime('%A')+': '+tom_date.strftime('%b %d, %Y'),terms_adder,shift.driver,'Weather',''],
+                ['','Driver','Time in','Time out','Windy',''],
+                ['','Helper','Time in','Time out','Rain',''],
                 ['','','','','Snow'],
                 ['','Truck #',''],]
-    t_h = Table(data_h,rowHeights=[0.3*inch,0.3*inch,0.3*inch,0.3*inch,0.3*inch],colWidths=[4*inch,3*inch,1*inch,0.5*inch])
-    t_h.setStyle(TableStyle([('GRID',(1,1),(1,4),1,colors.black),
+    t_h = Table(data_h,rowHeights=[0.3*inch,0.3*inch,0.3*inch,0.3*inch,0.3*inch],colWidths=[1.7*inch,1.7*inch,1.7*inch,1.7*inch,0.6*inch,0.4*inch])
+    t_h.setStyle(TableStyle([('GRID',(1,1),(3,4),1,colors.black),
                             ('GRID',(5,1),(5,3),1,colors.black),
                             ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
                            ('FONT',(0,1),(-1,-1),'Helvetica',8),
@@ -1252,8 +1252,8 @@ def pdf_build(shift):
                            ('SPAN',(0,0),(0,-1),
                            )]))
     #Property table
-    data= [['Property', 'Done?', 'Comments', ],
-           ['','', '', ],
+    data= [['Property', 'Time In', 'Time Out', ],
+           
                 ]
     for job in shift.jobs_in_shift.all():
         style = ParagraphStyle('jobs',fontName='Helvetica',fontSize=8,borderPadding=(3,5,3,5))
@@ -1266,7 +1266,7 @@ def pdf_build(shift):
         if job.job_location.instructions:
             data.append([str(job.job_location.instructions), ])
     #Table settings
-    t=Table(data,colWidths=[4.0*inch,0.5*inch,5.0*inch,0.85*inch,0.5*inch,0.5*inch,0.4*inch,],spaceBefore=0.15*inch)
+    t=Table(data,colWidths=[5.0*inch,1.2*inch,1.2*inch,0.85*inch,0.5*inch,],spaceBefore=0.15*inch)
     t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.lemonchiffon),
                             ('ALIGN', (1, 0), (-1, 1), "CENTER"),
                             ('TOPPADDING',(0,2),(-1,-1),4),
@@ -1303,7 +1303,27 @@ def pdf_build(shift):
                            ('GRID',(0,0),(-1,-1),1,colors.black),
                            ('FONT',(0,0),(-1,-1),'Helvetica',8),
                            ('ALIGN',(-2,0),(-1,-1),'LEFT'),]))
+    #endmarks
+    data_end_1 = [  ['I hereby certify that I have inspected the vehicle for this shift and find it to be safe to operate. '],
+                    ['Driver:______________________________','Date:______________________']]
 
+    e_1 = Table(data_end_1,colWidths=[5*inch, 2.4*inch])
+    e_1.setStyle(TableStyle([('BACKGROUND',(0,0),(3,3),'#ffffff'),
+                           ('BOX',(0,0),(-1,-1),1,colors.black),
+                           ('FONT',(0,0),(-1,-1),'Helvetica',8),
+                           ('ALIGN',(-2,0),(-1,-1),'LEFT'),
+                           ('BOTTOMPADDING',(0,0),(-1,-1),5),]))
+    data_end_2 = [  ['Comments/Truck issues:'],
+                    ]
+
+    e_2 = Table(data_end_2,colWidths=[7*inch, 2.4*inch])
+    e_2.setStyle(TableStyle([('BACKGROUND',(0,0),(3,3),'#ffffff'),
+                        #    ('BOX',(0,0),(-1,-1),1,colors.black),
+                           ('FONT',(0,0),(-1,-1),'Helvetica',8),
+                           ('ALIGN',(-2,0),(-1,-1),'LEFT'),
+                        #    ('BOTTOMPADDING',(0,0),(-1,-1)),
+                           ]))
+    
     elements.append(t_h)
     elements.append(t)
     for job in shift.jobs_in_shift.all():
@@ -1313,6 +1333,10 @@ def pdf_build(shift):
         if job.job_location.color == '#deeff9':
             elements.append(w_2)
             break
+    elements.append(Spacer(1,0.1*inch))
+    elements.append(e_1)
+    elements.append(Spacer(1,0.2*inch))
+    elements.append(e_2)
 
 
     # write the document to disk
